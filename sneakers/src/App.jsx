@@ -28,6 +28,8 @@ const arr = [
   },
 ];
 
+
+
 function App() {
 
   return (
@@ -44,17 +46,19 @@ function App() {
           </div>
         </div>
         <div className="d-flex">
-          
-       
           {arr.map((obj) => (
-        <Card
-        title={obj.title}
-        price={obj.price}
-        imageUrl={obj.imageUrl}
-        click={() => {
-          alert(obj.price)
-        }}
-      />))}
+            <Card
+              title={obj.title}
+              price={obj.price}
+              imageUrl={obj.imageUrl}
+              onClickPlus={() => {
+                console.log("Pressed plus");
+              }}
+              onClickFavorite={() => {
+                console.log("Pressed favorite");
+              }}
+            />
+          ))}
         </div>
       </div>
     </div>
