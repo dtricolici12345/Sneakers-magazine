@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 
-import Card from "./components/Card";
+import Card from "./components/Card/Card.jsx";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
 
