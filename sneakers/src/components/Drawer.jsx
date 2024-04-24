@@ -1,12 +1,19 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-extra-semi */
 /* eslint-disable react/no-unescaped-entities */
-function Drawer() {
+
+
+function Drawer({onClose, items }) {
+
+  
     return(
-        <div style={{ display: 'none'}} className="overlay">
+      
+        <div  className="overlay">
         <div className="drawer d-flex flex-column">
           <h2 className="mb-30 d-flex justify-between ">
             Pannier
             <img
+            onClick={onClose}
               className="cu-p"
               src="\img\delete.svg"
               alt="Remove"
@@ -14,37 +21,25 @@ function Drawer() {
           </h2>
 
           <div className="items flex">
-            <div className="cartItem d-flex align-center mb-20">
-              <div
-                style={{ backgroundImage: "url(/img/sneakers/1.jpg)" }}
-                className="cartItemImg"
-              ></div>
-              <div className="mr-20">
-                <p className="mb-5">Nike Air Max 270 Men's Sneakers</p>
-                <b>120,9 EUR.</b>
-              </div>
-              <img
-                className="removeBtn"
-                src="img/delete.svg"
-                alt="Remove"
-              />
-            </div>
-            <div className="cartItem d-flex align-center mb-20">
-              <div
-                style={{ backgroundImage: "url(/img/sneakers/1.jpg)" }}
-                className="cartItemImg"
-              ></div>
-              <div className="mr-20">
-                <p className="mb-5">Nike Air Max 270 Men's Sneakers</p>
-                <b>129,9$</b>
-              </div>
-              <img
-                className="removeBtn"
-                src="img/delete.svg"
-                alt="Remove"
-              />
-            </div>
+           {items.map((obj) => (
+             <div className="cartItem d-flex align-center mb-20">
+             <div
+               style={{ backgroundImage: `url(${obj.imageUrl})` }}
+               className="cartItemImg"
+             ></div>
+             <div className="mr-20 ">
+               <p className="mb-5">{obj.title}</p>
+               <b>{obj.price} EUR.</b>
+             </div>
+             <img
+               className="removeBtn"
+               src="img/delete.svg"
+               alt="Remove"
+             />
+           </div> 
+           )) } 
           </div>
+
           <div className="cartTotalBlock">
             <ul>
               <li>
