@@ -60,8 +60,7 @@ function App() {
 
 
   const onChangeSearchInput = (event) => {
-  
-    setSearchValue(event.target.value);
+   setSearchValue(event.target.value);
   };
 
   return (
