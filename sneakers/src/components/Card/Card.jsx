@@ -1,25 +1,37 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/no-unescaped-entities */
-import  { useState, useEffect } from 'react';
-import styles from './Card.module.scss';
 
-function Card({onClickFavorite, title, imageUrl, price,  onClickPlus }) {
-const [ isAdded, setIsAdded ] =useState(false);
+import stylesCard from "./Card.module.scss";
+import { useState } from "react";
 
-const handleClickPlus = () => {
-  onClickPlus({ title, imageUrl, price });
-  setIsAdded(!isAdded)
-};
 
-useEffect (() => {
-  console.log("isAdded changed")
-}, [isAdded]);
 
+function Card({ id, title, imageUrl, price, onFavorite, onPlus, favorited = false}) {
+  const [isAdded, setIsAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorited);
+
+  const onClickPlus1 = () => {
+    console.log("Title:", title);
+    console.log("ImageUrl:", imageUrl);
+    console.log("Price:", price);
+    onPlus({ title, imageUrl, price });
+    setIsAdded(!isAdded);
+  };
+
+  
+
+  const onClickFavorite = () => {
+    onFavorite({id, title, imageUrl, price });
+    setIsFavorite(!isFavorite);
+  }
 
   return (
-    <div className={styles.card}>
-      <div className={styles.favorite} onClick={onClickFavorite}>
-        <img src="img/heart-unliked.svg" alt="unliked"  />
+    <div className={stylesCard.card}>
+      <div className={stylesCard.favorite} onClick={onFavorite}>
+        <img
+          onClick={onClickFavorite}
+          src={isFavorite ? "/img/heart-liked1.svg" : "/img/heart-unliked.svg"}
+          alt="unliked"
+        />
       </div>
       <img width={133} height={112} src={imageUrl} alt="Sneakers" />
       <h5>{title}</h5>
@@ -29,9 +41,11 @@ useEffect (() => {
           <b>{price} EUR.</b>
         </div>
         <img
-          className={styles.plus}
-          onClick={handleClickPlus}
-          src={isAdded ? '/img/done.svg' : '/img/plus1.svg'}
+          className={stylesCard.plus}
+          onClick={onClickPlus1}
+          src={
+            isAdded ? "/img/done.svg" : "/img/plus1.svg"
+          }
           alt="Plus"
         />
       </div>
