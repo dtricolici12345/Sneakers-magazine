@@ -9,10 +9,8 @@ function Card({ id, title, imageUrl, price, onFavorite, onPlus, favorited = fals
   const [isAdded, setIsAdded] = useState(false);
   const [isFavorite, setIsFavorite] = useState(favorited);
 
-  const onClickPlus1 = () => {
-    console.log("Title:", title);
-    console.log("ImageUrl:", imageUrl);
-    console.log("Price:", price);
+  const onClickPlus = () => {
+  
     onPlus({ title, imageUrl, price });
     setIsAdded(!isAdded);
   };
@@ -26,9 +24,9 @@ function Card({ id, title, imageUrl, price, onFavorite, onPlus, favorited = fals
 
   return (
     <div className={stylesCard.card}>
-      <div className={stylesCard.favorite} onClick={onFavorite}>
+      <div className={stylesCard.favorite} onClick={onClickFavorite}>
         <img
-          onClick={onClickFavorite}
+         
           src={isFavorite ? "/img/heart-liked1.svg" : "/img/heart-unliked.svg"}
           alt="unliked"
         />
@@ -42,7 +40,7 @@ function Card({ id, title, imageUrl, price, onFavorite, onPlus, favorited = fals
         </div>
         <img
           className={stylesCard.plus}
-          onClick={onClickPlus1}
+          onClick={onClickPlus}
           src={
             isAdded ? "/img/done.svg" : "/img/plus1.svg"
           }

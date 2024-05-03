@@ -1,6 +1,7 @@
-import React from "react";
+
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
@@ -9,13 +10,13 @@ import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 
 function App() {
-  const [items, setItems] = React.useState([]);
-  const [cartItems, setCartItems] = React.useState([]);
-  const [favorites, setFavorites] = React.useState([]);
-  const [searchValue, setSearchValue] = React.useState("");
-  const [cartOpened, setCartOpened] = React.useState(false);
+  const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [cartOpened, setCartOpened] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     axios
       .get("https://6628e35a54afcabd07375526.mockapi.io/items")
       .then((res) => {
@@ -44,19 +45,22 @@ function App() {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const onAddToFavorite = (obj) => {
-    if (favorites.find((fav) => fav.id === obj.id)) {
-      axios.delete(
-        `https://6628e35a54afcabd07375526.mockapi.io/favorite/${obj.id}`
-      );
-      setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
-    } else {
-      axios.post("https://6628e35a54afcabd07375526.mockapi.io/favorite", obj);
-      setFavorites((prev) => [...prev, obj]);
+  const onAddToFavorite = async (obj) => {
+    try {
+      if (favorites.find((favObj) => favObj.id === obj.id)) {
+        axios.delete(`https://6628e35a54afcabd07375526.mockapi.io/favorite/${obj.id}`);
+      } else {
+        const { data } = await axios.post('https://6628e35a54afcabd07375526.mockapi.io/favorite', obj);
+        setFavorites((prev) => [...prev, data]);
+      }
+    } catch (error) {
+      alert('Failed to add to favorites.');
     }
   };
 
+
   const onChangeSearchInput = (event) => {
+  
     setSearchValue(event.target.value);
   };
 
