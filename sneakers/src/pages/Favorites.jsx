@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
+import { useContext } from "react";
 import Card from "../components/Card/Card";
+import AppContext from '../components/context';
 
-function Favorites({ items, onAddToFavorite }) {
+function Favorites() {
+const {favorites, onAddToFavorite} = useContext(AppContext);
+
   return (
     <div className="content p-40">
       <div className="d-flex align-center justify-between  mb-40">
         <h1>Favorites</h1>
       </div>
       <div className="d-flex flex-wrap">
-      {items.map((item, index) => (
+      {favorites.map((item, index) => (
             <Card key={index} favorited={true} onFavorite={onAddToFavorite} {...item} />
           ))}
       </div>
