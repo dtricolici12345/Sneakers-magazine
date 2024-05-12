@@ -1,17 +1,17 @@
 /* eslint-disable react/prop-types */
-import { useState, useContext } from "react";
+import { useState } from "react";
 import Info from "./Info";
 import axios from "axios";
-import AppContext from "../components/context";
-
+import { useCart } from "../hooks/useCart";
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Drawer({ onClose, onRemove, items }) {
-  const { cartItems, setCartItems } = useContext(AppContext);
-
+  const { cartItems, setCartItems, totalPrice } = useCart();
   const [orderId, setOrderId] = useState(null);
   const [isOrderComplete, setIsOrderComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const tax = ((totalPrice / 100) * 5).toFixed(2);
 
   const onClickOrder = async () => {
     try {
@@ -82,12 +82,12 @@ function Drawer({ onClose, onRemove, items }) {
                 <li>
                   <span>Total:</span>
                   <div></div>
-                  <b>214,98$</b>
+                  <b>{totalPrice} EUR.</b>
                 </li>
                 <li>
                   <span>Tax 5%:</span>
                   <div></div>
-                  <b>10,74$</b>
+                  <b>{tax} EUR.</b>
                 </li>
               </ul>
               <button

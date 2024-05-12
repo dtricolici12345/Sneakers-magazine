@@ -1,14 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import AppContext from '../src/components/context';
+import AppContext from "../src/components/context";
 
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
-
+import Orders from "./pages/Orders";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -20,24 +20,26 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const cartResponse = await axios.get(
-        "https://6628e35a54afcabd07375526.mockapi.io/cart"
-      );
-      const favoritesResponse = await axios.get(
-        "https://6628e35a54afcabd07375526.mockapi.io/favorite"
-      );
-      const itemsResponse = await axios.get(
-        "https://6628e35a54afcabd07375526.mockapi.io/items"
-      );
+      try {
+      const [cartResponse, favoritesResponse, itemsResponse] = await Promise.all([
+        axios.get("https://6628e35a54afcabd07375526.mockapi.io/cart"),
+        axios.get("https://6628e35a54afcabd07375526.mockapi.io/favorite"),
+        axios.get("https://6628e35a54afcabd07375526.mockapi.io/items"),
+      ]);
 
       setIsLoading(false);
       setCartItems(cartResponse.data);
       setFavorites(favoritesResponse.data);
       setItems(itemsResponse.data);
+    } catch (error) {
+      alert('Error fetching data ;(');
+      console.error(error);
     }
+  }
 
-    fetchData();
-  }, []);
+  fetchData();
+}, []);
+   
 
   const onAddToCart = (obj) => {
     console.log(obj);
@@ -87,8 +89,7 @@ function App() {
 
   const isItemAdded = (id) => {
     return cartItems.some((obj) => Number(obj.id) === Number(id));
-  }
-
+  };
 
   return (
     <AppContext.Provider
@@ -128,12 +129,9 @@ function App() {
               />
             }
           />
-          <Route
-            path="/favorites"
-            element={
-              <Favorites  />
-            }
-          />
+          <Route path="/favorites" element={<Favorites />} />
+
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </div>
     </AppContext.Provider>

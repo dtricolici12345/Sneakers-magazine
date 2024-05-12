@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
 
 import stylesCard from "./Card.module.scss";
-import { useState,  useContext } from "react";
-import ContentLoader from 'react-content-loader';
-import AppContext from '../context';
-
-
+import { useState, useContext } from "react";
+import ContentLoader from "react-content-loader";
+import AppContext from "../context";
 
 function Card({
   id,
@@ -17,7 +15,6 @@ function Card({
   favorited = false,
   loading = false,
 }) {
-
   const { isItemAdded } = useContext(AppContext);
 
   // const [isAdded, setIsAdded] = useState(added);
@@ -51,14 +48,18 @@ function Card({
         </ContentLoader>
       ) : (
         <>
-          <div className={stylesCard.favorite} onClick={onClickFavorite}>
-            <img
-              src={
-                isFavorite ? "/img/heart-liked1.svg" : "/img/heart-unliked.svg"
-              }
-              alt="unliked"
-            />
-          </div>
+          {onFavorite && (
+            <div className={stylesCard.favorite} onClick={onClickFavorite}>
+              <img
+                src={
+                  isFavorite
+                    ? "/img/heart-liked1.svg"
+                    : "/img/heart-unliked.svg"
+                }
+                alt="unliked"
+              />
+            </div>
+          )}
           <img width="100%" height={135} src={imageUrl} alt="Sneakers" />
           <h5>{title}</h5>
           <div className="d-flex justify-between align-center">
@@ -66,12 +67,14 @@ function Card({
               <span>Price:</span>
               <b>{price} EUR.</b>
             </div>
-            <img
-              className={stylesCard.plus}
-              onClick={onClickPlus}
-              src={isItemAdded(id) ?"/img/done.svg" : "/img/plus1.svg"}
-              alt="Plus"
-            />
+            {onPlus && (
+              <img
+                className={stylesCard.plus}
+                onClick={onClickPlus}
+                src={isItemAdded(id) ? "/img/done.svg" : "/img/plus1.svg"}
+                alt="Plus"
+              />
+            )}
           </div>
         </>
       )}
