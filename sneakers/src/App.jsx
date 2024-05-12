@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import AppContext from "../src/components/context";
 
 import Header from "./components/Header";
-import Drawer from "./components/Drawer";
+import Drawer from "./components/Drawer/Drawer";
 
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
@@ -98,19 +98,19 @@ function App() {
         cartItems,
         favorites,
         isItemAdded,
+        onAddToCart,
         onAddToFavorite,
         setCartOpened,
         setCartItems,
       }}
     >
       <div className="wrapper clear">
-        {cartOpened && (
-          <Drawer
-            items={cartItems}
-            onClose={() => setCartOpened(false)}
-            onRemove={onRemoveItem}
-          />
-        )}
+      <Drawer
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
+          opened={cartOpened}
+        />
         <Header onClickCart={() => setCartOpened(true)} />
 
         <Routes>

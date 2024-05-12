@@ -1,11 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import Info from "./Info";
+import Info from "../Info";
 import axios from "axios";
-import { useCart } from "../hooks/useCart";
+import { useCart } from "../../hooks/useCart";
+import styles from './Drawer.module.scss';
+
+
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function Drawer({ onClose, onRemove, items }) {
+function Drawer({ onClose, onRemove, items, opened }) {
   const { cartItems, setCartItems, totalPrice } = useCart();
   const [orderId, setOrderId] = useState(null);
   const [isOrderComplete, setIsOrderComplete] = useState(false);
@@ -40,8 +43,8 @@ function Drawer({ onClose, onRemove, items }) {
   };
 
   return (
-    <div className="overlay">
-      <div className="drawer d-flex flex-column">
+    <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+      <div className={styles.drawer}>
         <h2 className="mb-30 d-flex justify-between ">
           Cart
           <img
